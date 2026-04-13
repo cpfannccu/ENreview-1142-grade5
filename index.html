@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>松林國小114-2學期五年級英文期中考複習</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background: linear-gradient(180deg, #fdfbff, #eef6ff);
+      color: #333;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, #fdfbff, #eef6ff);
+      z-index: 15;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .tab-btn, .sub-btn, .action-btn, .small-btn, .word-btn {
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .tab-btn {
+      background: white;
+      color: #5a4aa3;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+    .tab-btn.active {
+      background: #5a4aa3;
+      color: #fff;
+    }
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 12px 32px;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .toolbar {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .toolbar h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    .toolbar p {
+      font-size: 14px;
+      color: #666;
+    }
+    .button-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .sub-btn, .action-btn {
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .sub-btn {
+      background: #e8f1ff;
+      color: #274a92;
+    }
+    .sub-btn.active {
+      background: #274a92;
+      color: #fff;
+    }
+    .action-btn {
+      background: #fff3c9;
+      color: #7d6100;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      border: 3px solid #f1f3ff;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .label {
+      font-size: 12px;
+      color: #888;
+    }
+    .main {
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      margin: 14px 0 8px;
+      line-height: 1.3;
+      color: #1d3d8f;
+    }
+    .sub {
+      text-align: center;
+      color: #666;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .card-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .small-btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .speak-btn {
+      background: #d6f7df;
+      color: #166b35;
+    }
+    .sentence-card, .pattern-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+    .sentence-card {
+      border-left: 8px solid #74c0fc;
+      margin-bottom: 12px;
+    }
+    .pattern-card {
+      border-left: 8px solid #7ed957;
+      margin-bottom: 12px;
+    }
+    .pattern-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2b5d19;
+      margin-bottom: 8px;
+    }
+    .pattern-grammar {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .pattern-note {
+      color: #666;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .sentence-zh {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .sentence-en {
+      font-size: 18px;
+      color: #1d3d8f;
+      margin-bottom: 12px;
+      line-height: 1.9;
+    }
+    .word-btn {
+      display: inline-block;
+      margin: 3px 4px;
+      padding: 4px 8px;
+      background: #eef4ff;
+      color: #1d3d8f;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 10px;
+    }
+    .word-btn:hover {
+      background: #d8e7ff;
+    }
+    .word-btn.active {
+      background: #ffd76a;
+      color: #5b4300;
+    }
+    .word-info {
+      margin-top: 10px;
+      background: #fff9d8;
+      border: 2px dashed #f2c94c;
+      border-radius: 12px;
+      padding: 10px;
+      color: #6a5200;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    @media (max-width: 640px) {
+      .main { font-size: 24px; }
+      .sentence-en, .word-btn { font-size: 17px; }
+      .sub { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="mustvocab">⭐ 必考單字</button>
+    <button class="tab-btn" data-tab="weekvocab">📘 唐詩本單字</button>
+    <button class="tab-btn" data-tab="reading">📗 短文練習</button>
+    <button class="tab-btn" data-tab="patterns">🧩 必考句型</button>
+  </div>
+
+  <div class="container">
+    <section id="mustvocab" class="panel active">
+      <div class="toolbar">
+        <h2>必考單字</h2>
+        <div class="button-row" id="mustCategoryBtns"></div>
+      </div>
+      <div class="grid" id="mustVocabGrid"></div>
+    </section>
+
+    <section id="weekvocab" class="panel">
+      <div class="toolbar">
+        <h2>唐詩本單字</h2>
+        <div class="button-row" id="weekButtons"></div>
+      </div>
+      <div class="grid" id="weekVocabGrid"></div>
+    </section>
+
+    <section id="reading" class="panel">
+      <div class="toolbar">
+        <h2>短文練習：Out of an Egg</h2>
+        <div class="button-row">
+          <button class="action-btn" id="readAllBtn">🔊 全部朗讀英文</button>
+        </div>
+      </div>
+      <div id="readingList"></div>
+    </section>
+
+    <section id="patterns" class="panel">
+      <div class="toolbar">
+        <h2>必考句型</h2>
+        <p>點按例句即可朗讀。</p>
+      </div>
+      <div id="patternList"></div>
+    </section>
+  </div>
+
+  <script>
+    const mustVocabData = {
+      "症狀": [
+        { en: "fever", zh: "發燒" }, { en: "runny nose", zh: "流鼻涕" }, { en: "sore throat", zh: "喉嚨痛" },
+        { en: "cold", zh: "感冒" }, { en: "headache", zh: "頭痛" }, { en: "toothache", zh: "牙痛" }, { en: "stomachache", zh: "胃痛" }
+      ],
+      "身體部位": [
+        { en: "eyes", zh: "眼睛（複數）" }, { en: "ears", zh: "耳朵（複數）" }, { en: "nose", zh: "鼻子" },
+        { en: "mouth", zh: "嘴巴" }, { en: "arms", zh: "手臂（複數）" }, { en: "hands", zh: "手（複數）" },
+        { en: "legs", zh: "腿（複數）" }, { en: "foot", zh: "腳" }, { en: "feet", zh: "腳（複數）" }
+      ],
+      "應用單字": [
+        { en: "have", zh: "有" }, { en: "has", zh: "有（第三人稱單數）" }, { en: "wrong", zh: "不對的；錯誤的" }, { en: "hurt", zh: "疼痛；受傷" }
+      ],
+      "補充單字": [
+        { en: "think", zh: "認為" }, { en: "kind", zh: "種類" }, { en: "put on", zh: "戴上" }, { en: "vegetable", zh: "蔬菜" },
+        { en: "hour", zh: "小時" }, { en: "product", zh: "產品" }, { en: "space", zh: "太空；空間" }, { en: "floating", zh: "漂浮" },
+        { en: "guess", zh: "猜測" }, { en: "protect", zh: "保護" }, { en: "compress", zh: "壓迫" }, { en: "suddenly", zh: "突然" },
+        { en: "sure", zh: "當然" }, { en: "back", zh: "返回" }, { en: "toilet", zh: "廁所" }, { en: "rest", zh: "休息" },
+        { en: "model", zh: "模型" }, { en: "checkup", zh: "檢查" }
+      ],
+      "日常用語": [
+        { en: "May I help you?", zh: "我可以幫你嗎？" }, { en: "You're welcome.", zh: "不客氣。" },
+        { en: "Can you give me a hand?", zh: "你能幫我一個忙嗎？" }, { en: "Be careful!", zh: "小心一點！" }
+      ]
+    };
+
+    const weekVocabData = {
+      "第2週": [{ zh: "護士", en: "nurse" }, { zh: "郵差", en: "mailman" }, { zh: "建築物", en: "building" }, { zh: "不同的", en: "different" }, { zh: "相同的", en: "same" }, { zh: "檸檬水", en: "lemonade" }],
+      "第3週": [{ zh: "天使", en: "angel" }, { zh: "只", en: "just" }, { zh: "尺寸", en: "size" }, { zh: "一些(加可數N)", en: "a few" }, { zh: "一些(加不可數N)", en: "a little" }, { zh: "垃圾", en: "trash" }, { zh: "恐龍", en: "dinosaur" }],
+      "第4週": [{ zh: "男人", en: "man" }, { zh: "女人", en: "woman" }, { zh: "辦公室", en: "office" }, { zh: "窗戶", en: "window" }, { zh: "形狀", en: "shape" }, { zh: "點心", en: "snack" }, { zh: "個人的", en: "personal" }],
+      "第5週": [{ zh: "國王", en: "king" }, { zh: "皇后", en: "queen" }, { zh: "駕駛", en: "drive" }, { zh: "肥胖", en: "fat" }, { zh: "瘦弱", en: "thin" }, { zh: "打電話", en: "call" }, { zh: "大多數", en: "mostly" }, { zh: "兩者之一", en: "either" }, { zh: "午睡", en: "nap" }],
+      "第6週": [{ zh: "駕駛員；司機", en: "driver" }, { zh: "三角形", en: "triangle" }, { zh: "緊急", en: "emergency" }, { zh: "圓的", en: "round" }, { zh: "金屬", en: "metal" }, { zh: "連棟房屋；露天平台", en: "terrace" }],
+      "第7週": [{ zh: "農場", en: "farm" }, { zh: "農夫", en: "farmer" }, { zh: "磚", en: "brick" }, { zh: "水泥", en: "cement" }, { zh: "木頭", en: "wood" }, { zh: "最愛的", en: "favorite" }, { zh: "入口", en: "entrance" }, { zh: "出口", en: "exit" }],
+      "第8週": [{ zh: "信件", en: "mail" }, { zh: "電子郵件", en: "e-mail" }, { zh: "產（卵）", en: "lay" }, { zh: "浴室", en: "bathroom" }, { zh: "臥室", en: "bedroom" }, { zh: "車庫", en: "garage" }, { zh: "廚房", en: "kitchen" }, { zh: "蠶絲", en: "silk" }],
+      "第9週": [{ zh: "錯誤", en: "wrong" }, { zh: "卡片", en: "card" }, { zh: "混亂的", en: "messy" }, { zh: "可能", en: "maybe" }, { zh: "庭院", en: "yard" }, { zh: "冰淇淋", en: "ice cream" }, { zh: "震動；岩石", en: "rock" }, { zh: "塔", en: "tower" }]
+    };
+
+    const readingData = [
+      { zh: "鳥類在巢中產卵。", en: "Birds lay eggs in nests." },
+      { zh: "幼鳥從蛋中孵化出來。", en: "Baby birds hatch from the eggs." },
+      { zh: "其他一些動物也會產卵。", en: "Some other animals lay eggs, too." },
+      { zh: "青蛙在水中產卵。", en: "Frogs lay eggs in the water." },
+      { zh: "蝌蚪從卵中孵化並長成青蛙。", en: "Tadpoles hatch from the eggs and grow into frogs." },
+      { zh: "蛇會產卵。", en: "Snakes lay eggs." },
+      { zh: "牠們在木頭裡或岩石下產卵。", en: "They lay their eggs in logs or under rocks." },
+      { zh: "海龜會產卵。", en: "Sea turtles lay eggs." },
+      { zh: "牠們在沙子裡產卵。", en: "They lay their eggs in the sand." },
+      { zh: "蜘蛛會產卵。", en: "Spiders lay eggs." },
+      { zh: "蜘蛛會製作絲質覆蓋物來保護她的卵。", en: "A spider makes a silk cover to protect her eggs." },
+      { zh: "短吻鱷和鱷魚會產卵。", en: "Alligators and crocodiles lay eggs." },
+      { zh: "牠們在陸地上築巢。", en: "They make nests on land." },
+      { zh: "魚類會產卵。", en: "Fish lay eggs." },
+      { zh: "牠們以許多不同的方式照顧牠們的卵！", en: "They take care of their eggs in many different ways!" },
+      { zh: "海龜在哪裡產卵？", en: "Where do sea turtles lay eggs?" },
+      { zh: "海龜在沙子裡產卵。", en: "They lay their eggs in the sand." }
+    ];
+
+    const patternData = [
+      { title: "What's wrong?", grammar: "What + be 動詞 + wrong?", note: "意思是「怎麼了？」。What is 可以縮寫成 What's。", examples: [{ en: "What's wrong?", zh: "怎麼了？" }, { en: "My eye hurts.", zh: "我的眼睛痛。" }] },
+      { title: "My eye hurts.", grammar: "所有格 + 名詞（部位） + hurt(s).", note: "單數部位用 hurts，複數部位用 hurt。", examples: [{ en: "My eye hurts.", zh: "我的眼睛痛。" }, { en: "His ears hurt.", zh: "他的雙耳痛。" }, { en: "Her mouth hurts.", zh: "她的嘴巴痛。" }] },
+      { title: "Do you have a cold?", grammar: "Do/Does + 主詞 + have + 名詞（症狀）?", note: "助動詞後面的動詞要用原形 have。Do 搭 I/we/you/they，Does 搭 he/she/it 或單數名詞。", examples: [{ en: "Do you have a cold?", zh: "你感冒了嗎？" }, { en: "Does John have a stomachache?", zh: "John 胃痛嗎？" }] },
+      { title: "Yes, I do. / No, I don't.", grammar: "Yes, 主詞 + do/does. / No, 主詞 + don't/doesn't.", note: "用助動詞問，就要用助動詞回答。否定句後面可以加補充說明。", examples: [{ en: "Yes, I do.", zh: "是的。" }, { en: "No, I don't. I have a headache.", zh: "不，我沒有。我頭痛。" }, { en: "No, she doesn't. She has a stomachache.", zh: "不，她沒有。她胃痛。" }] }
+    ];
+
+    const readingWordDict = {
+      birds: "鳥類", baby: "幼小的；嬰兒的", lay: "產（卵）", eggs: "蛋", egg: "蛋", in: "在…裡面", nests: "巢（複數）",
+      nest: "巢", hatch: "孵化", from: "從", the: "這個；這些", some: "一些", other: "其他的", animals: "動物（複數）",
+      animal: "動物", too: "也", frogs: "青蛙（複數）", frog: "青蛙", water: "水", tadpoles: "蝌蚪（複數）",
+      tadpole: "蝌蚪", and: "和", grow: "成長", into: "變成；進入", snakes: "蛇（複數）", snake: "蛇", they: "牠們",
+      their: "牠們的", logs: "原木；木頭（複數）", log: "原木；木頭", or: "或", under: "在…下面", rocks: "岩石（複數）",
+      rock: "岩石", sea: "海", turtles: "海龜（複數）", turtle: "海龜", sand: "沙子", spiders: "蜘蛛（複數）", spider: "蜘蛛",
+      makes: "製作；做", make: "製作；做", a: "一個", silk: "絲；蠶絲", cover: "覆蓋物；覆蓋", to: "去；用來", protect: "保護",
+      her: "她的", alligators: "短吻鱷（複數）", alligator: "短吻鱷", crocodiles: "鱷魚（複數）", crocodile: "鱷魚", on: "在…上面",
+      land: "陸地", fish: "魚", take: "拿；採取", care: "照顧", of: "…的；關於", many: "許多", different: "不同的", ways: "方式（複數）",
+      way: "方式", where: "哪裡"
+    };
+
+    let mustCategory = Object.keys(mustVocabData)[0];
+    let weekCategory = Object.keys(weekVocabData)[0];
+    let availableVoices = [];
+
+    function loadVoices() {
+      if ('speechSynthesis' in window) availableVoices = speechSynthesis.getVoices();
+    }
+    loadVoices();
+    if ('speechSynthesis' in window) {
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    function getPreferredVoice() {
+      if (!availableVoices || availableVoices.length === 0) return null;
+
+      const femaleHints = ["female", "zira", "samantha", "victoria", "karen", "ava", "aria", "emma", "jenny", "michelle", "allison", "joanna", "ivy", "susan"];
+      const americanVoices = availableVoices.filter(v =>
+        v.lang && (v.lang.toLowerCase().startsWith('en-us') || v.lang.toLowerCase() === 'en_us')
+      );
+
+      const femaleVoice = americanVoices.find(v =>
+        femaleHints.some(h => v.name.toLowerCase().includes(h))
+      );
+
+      return femaleVoice || americanVoices[0] || availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith('en')) || availableVoices[0];
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    function speakText(text, slow = false) {
+      if (!window.speechSynthesis) {
+        alert("此瀏覽器不支援語音朗讀。");
+        return;
+      }
+      speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      const voice = getPreferredVoice();
+      if (voice) {
+        utter.voice = voice;
+        utter.lang = 'en-US';
+      } else {
+        utter.lang = 'en-US';
+      }
+      utter.rate = slow ? 0.68 : 0.85;
+      utter.pitch = 1.08;
+      utter.volume = 1;
+      speechSynthesis.speak(utter);
+    }
+
+    function speakAllReading() {
+      if (!window.speechSynthesis) {
+        alert("此瀏覽器不支援語音朗讀。");
+        return;
+      }
+      speechSynthesis.cancel();
+      const voice = getPreferredVoice();
+      let i = 0;
+      function next() {
+        if (i >= readingData.length) return;
+        const utter = new SpeechSynthesisUtterance(readingData[i].en);
+        if (voice) {
+          utter.voice = voice;
+          utter.lang = 'en-US';
+        } else {
+          utter.lang = 'en-US';
+        }
+        utter.rate = 0.85;
+        utter.pitch = 1.08;
+        utter.volume = 1;
+        utter.onend = () => { i++; next(); };
+        speechSynthesis.speak(utter);
+      }
+      next();
+    }
+
+    function normalizeWord(word) {
+      return word.toLowerCase().replace(/[.,!?]/g, '').trim();
+    }
+
+    function showWordMeaning(word, buttonEl, infoEl, containerEl) {
+      const normalized = normalizeWord(word);
+      const zh = readingWordDict[normalized] || "目前尚未建立這個單字的中文意思";
+      containerEl.querySelectorAll('.word-btn').forEach(btn => btn.classList.remove('active'));
+      buttonEl.classList.add('active');
+      infoEl.innerHTML = `🔊 <strong>${normalized}</strong>：${zh}`;
+      speakText(normalized, true);
+    }
+
+    function createWordButtons(sentence, infoEl, wrapEl) {
+      const words = sentence.split(' ');
+      words.forEach(word => {
+        const btn = document.createElement('button');
+        btn.className = 'word-btn';
+        btn.type = 'button';
+        btn.textContent = word;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showWordMeaning(word, btn, infoEl, wrapEl);
+        });
+        wrapEl.appendChild(btn);
+      });
+    }
+
+    function createCard(item, labelText) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div>
+          <div class="label">${labelText}</div>
+          <div class="main">${item.en}</div>
+          <div class="sub">${item.zh}</div>
+        </div>
+        <div class="card-buttons">
+          <button class="small-btn speak-btn">🔊 朗讀</button>
+        </div>
+      `;
+      card.querySelector('.speak-btn').addEventListener('click', () => speakText(item.en));
+      return card;
+    }
+
+    function renderMustCategoryBtns() {
+      const box = document.getElementById('mustCategoryBtns');
+      box.innerHTML = '';
+      Object.keys(mustVocabData).forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'sub-btn' + (cat === mustCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.addEventListener('click', () => {
+          mustCategory = cat;
+          renderMustCategoryBtns();
+          renderMustVocab();
+        });
+        box.appendChild(btn);
+      });
+    }
+
+    function renderMustVocab() {
+      const grid = document.getElementById('mustVocabGrid');
+      grid.innerHTML = '';
+      mustVocabData[mustCategory].forEach(item => {
+        grid.appendChild(createCard(item, mustCategory));
+      });
+    }
+
+    function renderWeekButtons() {
+      const box = document.getElementById('weekButtons');
+      box.innerHTML = '';
+      Object.keys(weekVocabData).forEach(week => {
+        const btn = document.createElement('button');
+        btn.className = 'sub-btn' + (week === weekCategory ? ' active' : '');
+        btn.textContent = week;
+        btn.addEventListener('click', () => {
+          weekCategory = week;
+          renderWeekButtons();
+          renderWeekVocab();
+        });
+        box.appendChild(btn);
+      });
+    }
+
+    function renderWeekVocab() {
+      const grid = document.getElementById('weekVocabGrid');
+      grid.innerHTML = '';
+      weekVocabData[weekCategory].forEach(item => {
+        grid.appendChild(createCard(item, weekCategory));
+      });
+    }
+
+    function renderReading() {
+      const list = document.getElementById('readingList');
+      list.innerHTML = '';
+
+      readingData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'sentence-card';
+
+        const zhDiv = document.createElement('div');
+        zhDiv.className = 'sentence-zh';
+        zhDiv.textContent = `${index + 1}. ${item.zh}`;
+
+        const enDiv = document.createElement('div');
+        enDiv.className = 'sentence-en';
+
+        const speakBtn = document.createElement('button');
+        speakBtn.className = 'small-btn speak-btn';
+        speakBtn.type = 'button';
+        speakBtn.textContent = '🔊 朗讀這一句';
+        speakBtn.addEventListener('click', () => speakText(item.en));
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'word-info';
+        infoDiv.innerHTML = '點英文單字可聽慢速發音並看中文意思';
+
+        createWordButtons(item.en, infoDiv, enDiv);
+
+        card.appendChild(zhDiv);
+        card.appendChild(enDiv);
+        card.appendChild(speakBtn);
+        card.appendChild(infoDiv);
+        list.appendChild(card);
+      });
+    }
+
+    function renderPatterns() {
+      const list = document.getElementById('patternList');
+      list.innerHTML = '';
+      patternData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'pattern-card';
+
+        const title = document.createElement('div');
+        title.className = 'pattern-title';
+        title.textContent = item.title;
+
+        const grammar = document.createElement('div');
+        grammar.className = 'pattern-grammar';
+        grammar.textContent = item.grammar;
+
+        const note = document.createElement('div');
+        note.className = 'pattern-note';
+        note.textContent = item.note;
+
+        card.appendChild(title);
+        card.appendChild(grammar);
+        card.appendChild(note);
+
+        item.examples.forEach(ex => {
+          const exCard = document.createElement('div');
+          exCard.className = 'sentence-card';
+          exCard.style.marginTop = '10px';
+          exCard.style.marginBottom = '0';
+          exCard.style.borderLeftColor = '#9be15d';
+
+          const en = document.createElement('div');
+          en.className = 'sentence-en';
+          en.textContent = ex.en;
+
+          const zh = document.createElement('div');
+          zh.className = 'sentence-zh';
+          zh.textContent = ex.zh;
+
+          const btn = document.createElement('button');
+          btn.className = 'small-btn speak-btn';
+          btn.type = 'button';
+          btn.textContent = '🔊 朗讀例句';
+          btn.addEventListener('click', () => speakText(ex.en));
+
+          exCard.appendChild(en);
+          exCard.appendChild(zh);
+          exCard.appendChild(btn);
+          card.appendChild(exCard);
+        });
+
+        list.appendChild(card);
+      });
+    }
+
+    document.getElementById('readAllBtn').addEventListener('click', speakAllReading);
+
+    renderMustCategoryBtns();
+    renderMustVocab();
+    renderWeekButtons();
+    renderWeekVocab();
+    renderReading();
+    renderPatterns();
+  </script>
+</body>
+</html>
