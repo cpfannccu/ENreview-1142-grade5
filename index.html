@@ -204,6 +204,16 @@
       font-size: 15px;
       line-height: 1.6;
     }
+    .browser-tip {
+      background: #fff4e5;
+      border: 2px solid #ffd08a;
+      color: #8a5200;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      line-height: 1.7;
+      font-size: 14px;
+    }
     @media (max-width: 640px) {
       .main { font-size: 24px; }
       .sentence-en, .word-btn { font-size: 17px; }
@@ -220,6 +230,11 @@
   </div>
 
   <div class="container">
+    <div class="browser-tip" id="browserTip" style="display:none;">
+      目前瀏覽器可能不支援語音朗讀，或你是從 LINE / Facebook 內建瀏覽器開啟。<br>
+      建議改用 <strong>Chrome、Safari 或 Edge</strong> 開啟此網址，再使用朗讀功能。
+    </div>
+
     <section id="mustvocab" class="panel active">
       <div class="toolbar">
         <h2>必考單字</h2>
@@ -258,39 +273,186 @@
   <script>
     const mustVocabData = {
       "症狀": [
-        { en: "fever", zh: "發燒" }, { en: "runny nose", zh: "流鼻涕" }, { en: "sore throat", zh: "喉嚨痛" },
-        { en: "cold", zh: "感冒" }, { en: "headache", zh: "頭痛" }, { en: "toothache", zh: "牙痛" }, { en: "stomachache", zh: "胃痛" }
+        { en: "fever", zh: "發燒" },
+        { en: "runny nose", zh: "流鼻涕" },
+        { en: "sore throat", zh: "喉嚨痛" },
+        { en: "cold", zh: "感冒" },
+        { en: "headache", zh: "頭痛" },
+        { en: "toothache", zh: "牙痛" },
+        { en: "stomachache", zh: "胃痛" }
       ],
       "身體部位": [
-        { en: "eyes", zh: "眼睛（複數）" }, { en: "ears", zh: "耳朵（複數）" }, { en: "nose", zh: "鼻子" },
-        { en: "mouth", zh: "嘴巴" }, { en: "arms", zh: "手臂（複數）" }, { en: "hands", zh: "手（複數）" },
-        { en: "legs", zh: "腿（複數）" }, { en: "foot", zh: "腳" }, { en: "feet", zh: "腳（複數）" }
+        { en: "eyes", zh: "眼睛（複數）" },
+        { en: "ears", zh: "耳朵（複數）" },
+        { en: "nose", zh: "鼻子" },
+        { en: "mouth", zh: "嘴巴" },
+        { en: "arms", zh: "手臂（複數）" },
+        { en: "hands", zh: "手（複數）" },
+        { en: "legs", zh: "腿（複數）" },
+        { en: "foot", zh: "腳" },
+        { en: "feet", zh: "腳（複數）" }
       ],
       "應用單字": [
-        { en: "have", zh: "有" }, { en: "has", zh: "有（第三人稱單數）" }, { en: "wrong", zh: "不對的；錯誤的" }, { en: "hurt", zh: "疼痛；受傷" }
+        { en: "have", zh: "有" },
+        { en: "has", zh: "有（第三人稱單數）" },
+        { en: "wrong", zh: "不對的；錯誤的" },
+        { en: "hurt", zh: "疼痛；受傷" }
       ],
       "補充單字": [
-        { en: "think", zh: "認為" }, { en: "kind", zh: "種類" }, { en: "put on", zh: "戴上" }, { en: "vegetable", zh: "蔬菜" },
-        { en: "hour", zh: "小時" }, { en: "product", zh: "產品" }, { en: "space", zh: "太空；空間" }, { en: "floating", zh: "漂浮" },
-        { en: "guess", zh: "猜測" }, { en: "protect", zh: "保護" }, { en: "compress", zh: "壓迫" }, { en: "suddenly", zh: "突然" },
-        { en: "sure", zh: "當然" }, { en: "back", zh: "返回" }, { en: "toilet", zh: "廁所" }, { en: "rest", zh: "休息" },
-        { en: "model", zh: "模型" }, { en: "checkup", zh: "檢查" }
+        { en: "think", zh: "認為" },
+        { en: "kind", zh: "種類" },
+        { en: "put on", zh: "戴上" },
+        { en: "vegetable", zh: "蔬菜" },
+        { en: "hour", zh: "小時" },
+        { en: "product", zh: "產品" },
+        { en: "space", zh: "太空；空間" },
+        { en: "floating", zh: "漂浮" },
+        { en: "guess", zh: "猜測" },
+        { en: "protect", zh: "保護" },
+        { en: "compress", zh: "壓迫" },
+        { en: "suddenly", zh: "突然" },
+        { en: "sure", zh: "當然" },
+        { en: "back", zh: "返回" },
+        { en: "toilet", zh: "廁所" },
+        { en: "rest", zh: "休息" },
+        { en: "model", zh: "模型" },
+        { en: "checkup", zh: "檢查" }
       ],
       "日常用語": [
-        { en: "May I help you?", zh: "我可以幫你嗎？" }, { en: "You're welcome.", zh: "不客氣。" },
-        { en: "Can you give me a hand?", zh: "你能幫我一個忙嗎？" }, { en: "Be careful!", zh: "小心一點！" }
+        { en: "May I help you?", zh: "我可以幫你嗎？" },
+        { en: "You're welcome.", zh: "不客氣。" },
+        { en: "Can you give me a hand?", zh: "你能幫我一個忙嗎？" },
+        { en: "Be careful!", zh: "小心一點！" }
+      ],
+      "地點": [
+        { en: "supermarket", zh: "超市" },
+        { en: "park", zh: "公園" },
+        { en: "library", zh: "圖書館" },
+        { en: "post office", zh: "郵局" },
+        { en: "bank", zh: "銀行" },
+        { en: "bookstore", zh: "書店" },
+        { en: "hospital", zh: "醫院" },
+        { en: "museum", zh: "博物館" }
+      ],
+      "動物": [
+        { en: "koalas", zh: "無尾熊" },
+        { en: "monkeys", zh: "猴子" },
+        { en: "lions", zh: "獅子" },
+        { en: "tigers", zh: "老虎" },
+        { en: "elephants", zh: "大象" },
+        { en: "zebras", zh: "斑馬" },
+        { en: "turtles", zh: "烏龜" },
+        { en: "horses", zh: "馬" }
+      ],
+      "數字": [
+        { en: "one hundred", zh: "100" },
+        { en: "two hundred", zh: "200" },
+        { en: "three hundred", zh: "300" },
+        { en: "four hundred", zh: "400" },
+        { en: "five hundred", zh: "500" },
+        { en: "six hundred", zh: "600" },
+        { en: "seven hundred", zh: "700" },
+        { en: "eight hundred", zh: "800" },
+        { en: "nine hundred", zh: "900" },
+        { en: "one thousand", zh: "1000" }
+      ],
+      "星期": [
+        { en: "Monday", zh: "星期一" },
+        { en: "Tuesday", zh: "星期二" },
+        { en: "Wednesday", zh: "星期三" },
+        { en: "Thursday", zh: "星期四" },
+        { en: "Friday", zh: "星期五" },
+        { en: "Saturday", zh: "星期六" },
+        { en: "Sunday", zh: "星期日" }
+      ],
+      "科目": [
+        { en: "art", zh: "藝術" },
+        { en: "music", zh: "音樂" },
+        { en: "Chinese", zh: "中文" },
+        { en: "science", zh: "自然科學" },
+        { en: "social studies", zh: "社會" },
+        { en: "English", zh: "英文" },
+        { en: "PE", zh: "體育" },
+        { en: "math", zh: "數學" }
       ]
     };
 
     const weekVocabData = {
-      "第2週": [{ zh: "護士", en: "nurse" }, { zh: "郵差", en: "mailman" }, { zh: "建築物", en: "building" }, { zh: "不同的", en: "different" }, { zh: "相同的", en: "same" }, { zh: "檸檬水", en: "lemonade" }],
-      "第3週": [{ zh: "天使", en: "angel" }, { zh: "只", en: "just" }, { zh: "尺寸", en: "size" }, { zh: "一些(加可數N)", en: "a few" }, { zh: "一些(加不可數N)", en: "a little" }, { zh: "垃圾", en: "trash" }, { zh: "恐龍", en: "dinosaur" }],
-      "第4週": [{ zh: "男人", en: "man" }, { zh: "女人", en: "woman" }, { zh: "辦公室", en: "office" }, { zh: "窗戶", en: "window" }, { zh: "形狀", en: "shape" }, { zh: "點心", en: "snack" }, { zh: "個人的", en: "personal" }],
-      "第5週": [{ zh: "國王", en: "king" }, { zh: "皇后", en: "queen" }, { zh: "駕駛", en: "drive" }, { zh: "肥胖", en: "fat" }, { zh: "瘦弱", en: "thin" }, { zh: "打電話", en: "call" }, { zh: "大多數", en: "mostly" }, { zh: "兩者之一", en: "either" }, { zh: "午睡", en: "nap" }],
-      "第6週": [{ zh: "駕駛員；司機", en: "driver" }, { zh: "三角形", en: "triangle" }, { zh: "緊急", en: "emergency" }, { zh: "圓的", en: "round" }, { zh: "金屬", en: "metal" }, { zh: "連棟房屋；露天平台", en: "terrace" }],
-      "第7週": [{ zh: "農場", en: "farm" }, { zh: "農夫", en: "farmer" }, { zh: "磚", en: "brick" }, { zh: "水泥", en: "cement" }, { zh: "木頭", en: "wood" }, { zh: "最愛的", en: "favorite" }, { zh: "入口", en: "entrance" }, { zh: "出口", en: "exit" }],
-      "第8週": [{ zh: "信件", en: "mail" }, { zh: "電子郵件", en: "e-mail" }, { zh: "產（卵）", en: "lay" }, { zh: "浴室", en: "bathroom" }, { zh: "臥室", en: "bedroom" }, { zh: "車庫", en: "garage" }, { zh: "廚房", en: "kitchen" }, { zh: "蠶絲", en: "silk" }],
-      "第9週": [{ zh: "錯誤", en: "wrong" }, { zh: "卡片", en: "card" }, { zh: "混亂的", en: "messy" }, { zh: "可能", en: "maybe" }, { zh: "庭院", en: "yard" }, { zh: "冰淇淋", en: "ice cream" }, { zh: "震動；岩石", en: "rock" }, { zh: "塔", en: "tower" }]
+      "第2週": [
+        { zh: "護士", en: "nurse" },
+        { zh: "郵差", en: "mailman" },
+        { zh: "建築物", en: "building" },
+        { zh: "不同的", en: "different" },
+        { zh: "相同的", en: "same" },
+        { zh: "檸檬水", en: "lemonade" }
+      ],
+      "第3週": [
+        { zh: "天使", en: "angel" },
+        { zh: "只", en: "just" },
+        { zh: "尺寸", en: "size" },
+        { zh: "一些(加可數N)", en: "a few" },
+        { zh: "一些(加不可數N)", en: "a little" },
+        { zh: "垃圾", en: "trash" },
+        { zh: "恐龍", en: "dinosaur" }
+      ],
+      "第4週": [
+        { zh: "男人", en: "man" },
+        { zh: "女人", en: "woman" },
+        { zh: "辦公室", en: "office" },
+        { zh: "窗戶", en: "window" },
+        { zh: "形狀", en: "shape" },
+        { zh: "點心", en: "snack" },
+        { zh: "個人的", en: "personal" }
+      ],
+      "第5週": [
+        { zh: "國王", en: "king" },
+        { zh: "皇后", en: "queen" },
+        { zh: "駕駛", en: "drive" },
+        { zh: "肥胖", en: "fat" },
+        { zh: "瘦弱", en: "thin" },
+        { zh: "打電話", en: "call" },
+        { zh: "大多數", en: "mostly" },
+        { zh: "兩者之一", en: "either" },
+        { zh: "午睡", en: "nap" }
+      ],
+      "第6週": [
+        { zh: "駕駛員；司機", en: "driver" },
+        { zh: "三角形", en: "triangle" },
+        { zh: "緊急", en: "emergency" },
+        { zh: "圓的", en: "round" },
+        { zh: "金屬", en: "metal" },
+        { zh: "連棟房屋；露天平台", en: "terrace" }
+      ],
+      "第7週": [
+        { zh: "農場", en: "farm" },
+        { zh: "農夫", en: "farmer" },
+        { zh: "磚", en: "brick" },
+        { zh: "水泥", en: "cement" },
+        { zh: "木頭", en: "wood" },
+        { zh: "最愛的", en: "favorite" },
+        { zh: "入口", en: "entrance" },
+        { zh: "出口", en: "exit" }
+      ],
+      "第8週": [
+        { zh: "信件", en: "mail" },
+        { zh: "電子郵件", en: "e-mail" },
+        { zh: "產（卵）", en: "lay" },
+        { zh: "浴室", en: "bathroom" },
+        { zh: "臥室", en: "bedroom" },
+        { zh: "車庫", en: "garage" },
+        { zh: "廚房", en: "kitchen" },
+        { zh: "蠶絲", en: "silk" }
+      ],
+      "第9週": [
+        { zh: "錯誤", en: "wrong" },
+        { zh: "卡片", en: "card" },
+        { zh: "混亂的", en: "messy" },
+        { zh: "可能", en: "maybe" },
+        { zh: "庭院", en: "yard" },
+        { zh: "冰淇淋", en: "ice cream" },
+        { zh: "震動；岩石", en: "rock" },
+        { zh: "塔", en: "tower" }
+      ]
     };
 
     const readingData = [
@@ -314,23 +476,110 @@
     ];
 
     const patternData = [
-      { title: "What's wrong?", grammar: "What + be 動詞 + wrong?", note: "意思是「怎麼了？」。What is 可以縮寫成 What's。", examples: [{ en: "What's wrong?", zh: "怎麼了？" }, { en: "My eye hurts.", zh: "我的眼睛痛。" }] },
-      { title: "My eye hurts.", grammar: "所有格 + 名詞（部位） + hurt(s).", note: "單數部位用 hurts，複數部位用 hurt。", examples: [{ en: "My eye hurts.", zh: "我的眼睛痛。" }, { en: "His ears hurt.", zh: "他的雙耳痛。" }, { en: "Her mouth hurts.", zh: "她的嘴巴痛。" }] },
-      { title: "Do you have a cold?", grammar: "Do/Does + 主詞 + have + 名詞（症狀）?", note: "助動詞後面的動詞要用原形 have。Do 搭 I/we/you/they，Does 搭 he/she/it 或單數名詞。", examples: [{ en: "Do you have a cold?", zh: "你感冒了嗎？" }, { en: "Does John have a stomachache?", zh: "John 胃痛嗎？" }] },
-      { title: "Yes, I do. / No, I don't.", grammar: "Yes, 主詞 + do/does. / No, 主詞 + don't/doesn't.", note: "用助動詞問，就要用助動詞回答。否定句後面可以加補充說明。", examples: [{ en: "Yes, I do.", zh: "是的。" }, { en: "No, I don't. I have a headache.", zh: "不，我沒有。我頭痛。" }, { en: "No, she doesn't. She has a stomachache.", zh: "不，她沒有。她胃痛。" }] }
+      {
+        title: "What's wrong?",
+        grammar: "What + be 動詞 + wrong?",
+        note: "意思是「怎麼了？」。What is 可以縮寫成 What's。",
+        examples: [
+          { en: "What's wrong?", zh: "怎麼了？" },
+          { en: "My eye hurts.", zh: "我的眼睛痛。" }
+        ]
+      },
+      {
+        title: "My eye hurts.",
+        grammar: "所有格 + 名詞（部位） + hurt(s).",
+        note: "單數部位用 hurts，複數部位用 hurt。",
+        examples: [
+          { en: "My eye hurts.", zh: "我的眼睛痛。" },
+          { en: "His ears hurt.", zh: "他的雙耳痛。" },
+          { en: "Her mouth hurts.", zh: "她的嘴巴痛。" }
+        ]
+      },
+      {
+        title: "Do you have a cold?",
+        grammar: "Do/Does + 主詞 + have + 名詞（症狀）?",
+        note: "助動詞後面的動詞要用原形 have。Do 搭 I/we/you/they，Does 搭 he/she/it 或單數名詞。",
+        examples: [
+          { en: "Do you have a cold?", zh: "你感冒了嗎？" },
+          { en: "Does John have a stomachache?", zh: "John 胃痛嗎？" }
+        ]
+      },
+      {
+        title: "Yes, I do. / No, I don't.",
+        grammar: "Yes, 主詞 + do/does. / No, 主詞 + don't/doesn't.",
+        note: "用助動詞問，就要用助動詞回答。否定句後面可以加補充說明。",
+        examples: [
+          { en: "Yes, I do.", zh: "是的。" },
+          { en: "No, I don't. I have a headache.", zh: "不，我沒有。我頭痛。" },
+          { en: "No, she doesn't. She has a stomachache.", zh: "不，她沒有。她胃痛。" }
+        ]
+      }
     ];
 
     const readingWordDict = {
-      birds: "鳥類", baby: "幼小的；嬰兒的", lay: "產（卵）", eggs: "蛋", egg: "蛋", in: "在…裡面", nests: "巢（複數）",
-      nest: "巢", hatch: "孵化", from: "從", the: "這個；這些", some: "一些", other: "其他的", animals: "動物（複數）",
-      animal: "動物", too: "也", frogs: "青蛙（複數）", frog: "青蛙", water: "水", tadpoles: "蝌蚪（複數）",
-      tadpole: "蝌蚪", and: "和", grow: "成長", into: "變成；進入", snakes: "蛇（複數）", snake: "蛇", they: "牠們",
-      their: "牠們的", logs: "原木；木頭（複數）", log: "原木；木頭", or: "或", under: "在…下面", rocks: "岩石（複數）",
-      rock: "岩石", sea: "海", turtles: "海龜（複數）", turtle: "海龜", sand: "沙子", spiders: "蜘蛛（複數）", spider: "蜘蛛",
-      makes: "製作；做", make: "製作；做", a: "一個", silk: "絲；蠶絲", cover: "覆蓋物；覆蓋", to: "去；用來", protect: "保護",
-      her: "她的", alligators: "短吻鱷（複數）", alligator: "短吻鱷", crocodiles: "鱷魚（複數）", crocodile: "鱷魚", on: "在…上面",
-      land: "陸地", fish: "魚", take: "拿；採取", care: "照顧", of: "…的；關於", many: "許多", different: "不同的", ways: "方式（複數）",
-      way: "方式", where: "哪裡"
+      birds: "鳥類",
+      baby: "幼小的；嬰兒的",
+      lay: "產（卵）",
+      eggs: "蛋",
+      egg: "蛋",
+      in: "在…裡面",
+      nests: "巢（複數）",
+      nest: "巢",
+      hatch: "孵化",
+      from: "從",
+      the: "這個；這些",
+      some: "一些",
+      other: "其他的",
+      animals: "動物（複數）",
+      animal: "動物",
+      too: "也",
+      frogs: "青蛙（複數）",
+      frog: "青蛙",
+      water: "水",
+      tadpoles: "蝌蚪（複數）",
+      tadpole: "蝌蚪",
+      and: "和",
+      grow: "成長",
+      into: "變成；進入",
+      snakes: "蛇（複數）",
+      snake: "蛇",
+      they: "牠們",
+      their: "牠們的",
+      logs: "原木；木頭（複數）",
+      log: "原木；木頭",
+      or: "或",
+      under: "在…下面",
+      rocks: "岩石（複數）",
+      rock: "岩石",
+      sea: "海",
+      turtles: "海龜（複數）",
+      turtle: "海龜",
+      sand: "沙子",
+      spiders: "蜘蛛（複數）",
+      spider: "蜘蛛",
+      makes: "製作；做",
+      make: "製作；做",
+      a: "一個",
+      silk: "絲；蠶絲",
+      cover: "覆蓋物；覆蓋",
+      to: "去；用來",
+      protect: "保護",
+      her: "她的",
+      alligators: "短吻鱷（複數）",
+      alligator: "短吻鱷",
+      crocodiles: "鱷魚（複數）",
+      crocodile: "鱷魚",
+      on: "在…上面",
+      land: "陸地",
+      fish: "魚",
+      take: "拿；採取",
+      care: "照顧",
+      of: "…的；關於",
+      many: "許多",
+      different: "不同的",
+      ways: "方式（複數）",
+      way: "方式",
+      where: "哪裡"
     };
 
     let mustCategory = Object.keys(mustVocabData)[0];
@@ -338,11 +587,25 @@
     let availableVoices = [];
 
     function loadVoices() {
-      if ('speechSynthesis' in window) availableVoices = speechSynthesis.getVoices();
+      if ('speechSynthesis' in window) {
+        availableVoices = speechSynthesis.getVoices();
+      }
     }
+
     loadVoices();
+
     if ('speechSynthesis' in window) {
       speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    function showBrowserTipIfNeeded() {
+      const tip = document.getElementById('browserTip');
+      const ua = navigator.userAgent.toLowerCase();
+      const maybeInApp = ua.includes("line") || ua.includes("fbav") || ua.includes("fban") || ua.includes("instagram") || ua.includes("messenger");
+      const unsupported = !('speechSynthesis' in window);
+      if (maybeInApp || unsupported) {
+        tip.style.display = 'block';
+      }
     }
 
     function getPreferredVoice() {
@@ -357,7 +620,10 @@
         femaleHints.some(h => v.name.toLowerCase().includes(h))
       );
 
-      return femaleVoice || americanVoices[0] || availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith('en')) || availableVoices[0];
+      return femaleVoice ||
+             americanVoices[0] ||
+             availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith('en')) ||
+             availableVoices[0];
     }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -369,49 +635,58 @@
       });
     });
 
+    function showSpeechAlert() {
+      alert("此瀏覽器不支援語音朗讀，或目前是用內建瀏覽器開啟。\n\n請改用 Chrome、Safari 或 Edge 開啟此網址。若您是從 LINE 或 Facebook 點開，請改用外部瀏覽器開啟。");
+    }
+
     function speakText(text, slow = false) {
       if (!window.speechSynthesis) {
-        alert("此瀏覽器不支援語音朗讀。");
+        showSpeechAlert();
         return;
       }
+
       speechSynthesis.cancel();
+
       const utter = new SpeechSynthesisUtterance(text);
       const voice = getPreferredVoice();
+
       if (voice) {
         utter.voice = voice;
-        utter.lang = 'en-US';
-      } else {
-        utter.lang = 'en-US';
       }
+      utter.lang = 'en-US';
       utter.rate = slow ? 0.68 : 0.85;
       utter.pitch = 1.08;
       utter.volume = 1;
+
       speechSynthesis.speak(utter);
     }
 
     function speakAllReading() {
       if (!window.speechSynthesis) {
-        alert("此瀏覽器不支援語音朗讀。");
+        showSpeechAlert();
         return;
       }
+
       speechSynthesis.cancel();
       const voice = getPreferredVoice();
       let i = 0;
+
       function next() {
         if (i >= readingData.length) return;
+
         const utter = new SpeechSynthesisUtterance(readingData[i].en);
-        if (voice) {
-          utter.voice = voice;
-          utter.lang = 'en-US';
-        } else {
-          utter.lang = 'en-US';
-        }
+        if (voice) utter.voice = voice;
+        utter.lang = 'en-US';
         utter.rate = 0.85;
         utter.pitch = 1.08;
         utter.volume = 1;
-        utter.onend = () => { i++; next(); };
+        utter.onend = () => {
+          i++;
+          next();
+        };
         speechSynthesis.speak(utter);
       }
+
       next();
     }
 
@@ -546,6 +821,7 @@
     function renderPatterns() {
       const list = document.getElementById('patternList');
       list.innerHTML = '';
+
       patternData.forEach(item => {
         const card = document.createElement('div');
         card.className = 'pattern-card';
@@ -599,6 +875,7 @@
 
     document.getElementById('readAllBtn').addEventListener('click', speakAllReading);
 
+    showBrowserTipIfNeeded();
     renderMustCategoryBtns();
     renderMustVocab();
     renderWeekButtons();
